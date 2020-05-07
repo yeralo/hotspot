@@ -51,16 +51,16 @@ ap_revnet=`echo "$ap_ip" | awk -F "." '{ print $3"."$2"."$1 }'`
 #
 tor_subn="10.192.0.0/10"
 #
-if [ "$wl0_dev" == "" ]; then
-# internal wlan adapter
-  wl0_devs=`ls -l --full-time /sys/class/net/ 2>/dev/null | grep -iE "mmc.*wlan" | cut -d" " -f9`
-  wl0_dev=`echo "$wl0_devs" | awk -F " " '{ print $1 }'`
-  if [ "$wl0_dev" == "" ]; then wl0_dev="wlan0"; fi
-fi
 if [ "$wl1_dev" == "" ]; then
+# internal wlan adapter
+  wl1_devs=`ls -l --full-time /sys/class/net/ 2>/dev/null | grep -iE "mmc.*wlan" | cut -d" " -f9`
+  wl1_dev=`echo "$wl0_devs" | awk -F " " '{ print $1 }'`
+  if [ "$wl1_dev" == "" ]; then wl1_dev="wlan0"; fi
+fi
+if [ "$wl0_dev" == "" ]; then
 # external wlan adapter via usb
-  wl1_devs=`ls -l --full-time /sys/class/net/ 2>/dev/null | grep -iE "usb.*wlan" | cut -d" " -f9`
-  wl1_dev=`echo "$wl1_devs" | awk -F " " '{ print $1 }'`
+  wl0_devs=`ls -l --full-time /sys/class/net/ 2>/dev/null | grep -iE "usb.*wlan" | cut -d" " -f9`
+  wl0_dev=`echo "$wl0_devs" | awk -F " " '{ print $1 }'`
 fi
 #
 wpactrl="/var/run/wpa_supplicant"
